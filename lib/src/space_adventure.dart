@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 import 'planetary_system.dart';
 
 class SpaceAdventure {
@@ -26,14 +27,25 @@ class SpaceAdventure {
 
   void travel(bool randomChoice) {
     if (randomChoice) {
-      // implement randomness later
-      print('Arrived at ${planetarySystem.planets[0].name}.'
-          '${planetarySystem.planets[0].description}');
+      travelToRandomDestination();
     } else {
-      print('Name the planet you would like to visit.');
       final planetChoice = stdin.readLineSync();
-      print('Arrived at ${planetChoice}');
+      travelTo(planetChoice);
     }
+  }
+
+  void travelToRandomDestination() {
+    final index = Random().nextInt(planetarySystem.numberOfPlanets);
+    travelTo(planetarySystem.planets[index].name);
+  }
+
+  void travelTo(String planetChoice) {
+    print('Traveling to ${planetChoice}...\n');
+    planetarySystem.planets.forEach((planet) {
+      if (planet.name == planetChoice) {
+        print('Arrived at ${planet.name}. ${planet.description}');
+      }
+    });
   }
 
   bool promptForRandomOrSpecificDestination(String prompt) {

@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'dart:io';
 import 'package:dart_adventure/dart_adventure.dart';
 
 const systemName = 'Solar System';
@@ -14,14 +16,24 @@ const planetData = {
 };
 
 void main(List<String> arguments) {
+  // if (arguments.length != 3) {
+  //   print('Please provide json file with planet information.');
+  //   print('Example of usage: dart bin/main.dart bin/planetarySystem.json');
+  //   return;
+  // }
+
+  // var planetData2;
+  // final jsonFilename = arguments[1];
+  // File(jsonFilename).readAsString().then( (string) => planetData2 = jsonDecode(string));
+
   SpaceAdventure(
-          planetarySystem:
-              PlanetarySystem(name: systemName, planets: mockPlanets()))
-      .start();
+    planetarySystem:
+      PlanetarySystem(name: systemName, planets: mockPlanets()))
+    .start();
 }
 
 List<Planet> mockPlanets() {
-  return planetData.entries.map(
-    (e) => Planet(name: e.key, description: e.value))
-  .toList();
+  return planetData.entries
+      .map((e) => Planet(name: e.key, description: e.value))
+      .toList();
 }

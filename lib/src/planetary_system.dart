@@ -8,6 +8,11 @@ class PlanetarySystem {
 
   PlanetarySystem({this.name = 'Unnamed System', this.planets = const []});
 
+  PlanetarySystem.providedJson(Map<String, dynamic> json)
+      : this.name = json['name'],
+        this.planets = json['planets'].map<Planet>((e) => 
+        Planet.providedJson(e)).toList();
+
   int get numberOfPlanets => planets.length;
   bool get hasPlanets => planets.isNotEmpty;
 
@@ -17,9 +22,7 @@ class PlanetarySystem {
   }
 
   Planet planetWithName(String name) {
-    return planets.firstWhere(
-      (planet) => planet.name == name, 
-      orElse: () => Planet.nullPlanet()
-    );
+    return planets.firstWhere((planet) => planet.name == name,
+        orElse: () => Planet.nullPlanet());
   }
 }

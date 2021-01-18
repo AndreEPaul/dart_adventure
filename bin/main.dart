@@ -2,38 +2,16 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:dart_adventure/dart_adventure.dart';
 
-const systemName = 'Solar System';
-const planetData = {
-  'Mercury': 'A very hot planet, closest to the sun.',
-  'Venus': "It's very cloudy here!",
-  'Earth': 'There is something very familiar about this planet.',
-  'Mars': 'Known as the red planet.',
-  'Jupiter': 'A gas giant, with a noticeable red spot.',
-  'Saturn': 'This planet has beautiful rings around it.',
-  'Uranus': 'Strangely, this planet rotates around on its side.',
-  'Neptune': 'A very cold planet, furthest from the sun.',
-  'Pluto': 'I don\'t care what they say - it\'s a planet.'
-};
-
 void main(List<String> arguments) {
-  // if (arguments.length != 3) {
-  //   print('Please provide json file with planet information.');
-  //   print('Example of usage: dart bin/main.dart bin/planetarySystem.json');
-  //   return;
-  // }
+  if (arguments.length != 1) {
+    print('Please provide json file with planet information.');
+    print('Example of usage: dart bin/main.dart bin/planetarySystem.json');
+    return;
+  }
 
-  // var planetData2;
-  // final jsonFilename = arguments[1];
-  // File(jsonFilename).readAsString().then( (string) => planetData2 = jsonDecode(string));
+  // filepath now should be in arguments[0]
 
-  SpaceAdventure(
-    planetarySystem:
-      PlanetarySystem(name: systemName, planets: mockPlanets()))
-    .start();
-}
-
-List<Planet> mockPlanets() {
-  return planetData.entries
-      .map((e) => Planet(name: e.key, description: e.value))
-      .toList();
+  File(arguments[0]).readAsString().then((String fileData) => SpaceAdventure(
+          planetarySystem: PlanetarySystem.providedJson(jsonDecode(fileData)))
+      .start());
 }
